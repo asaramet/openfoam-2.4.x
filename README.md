@@ -1,4 +1,4 @@
-# Docker image for OpenFOAM 2.4.x with OpenMPI 1.6.5 and Debian 8.11-slim
+# Docker image for OpenFOAM 2.4.x with OpenMPI 1.6.5, CGAL-4.6.3 and swak4Foam-0.4.1 on Debian 8.11-slim
 ## Testing and Updating Legacy Code
 
 Are you looking for an easy way to run and test your legacy OpenFOAM 2.4.x code on new systems? Look no further! Introduce the OpenFOAM 2.4.x Docker image, designed to address the challenges of installing the deprecated version on new systems. This image allows for easy testing of old code and updating to newer versions.

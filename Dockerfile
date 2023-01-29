@@ -29,5 +29,29 @@ RUN bash -c "source $TARGET_DIR/OpenFOAM-${VERSION}/etc/bashrc \
 		&& ./Allwmake 2>&1 | tee Allwmake.log \
 		&& ./Allwmake 2>&1 | tee Allwmake.log"
 
+# Install swak4Foam
+RUN git clone https://github.com/Unofficial-Extend-Project-Mirror/openfoam-extend-Breeder2.0-libraries-swak4Foam.git ${TARGET_DIR}/swak4Foam
+WORKDIR ${TARGET_DIR}/swak4Foam
+
+RUN echo 'SWAK4FOAM_SRC="/opt/bwhpc/common/cae/openfoam/${VERSION}/swak4Foam/Libraries"' >> ${TARGET_DIR}/OpenFOAM-${VERSION}/etc/bashrc \
+		&& echo 'PATH="/opt/bwhpc/common/cae/openfoam/${VERSION}/swak4Foam/privateRequirements/bin":$PATH' >> ${TARGET_DIR}/OpenFOAM-${VERSION}/etc/bashrc
+
+## Install bison-2
+RUN bash -c "source $TARGET_DIR/OpenFOAM-${VERSION}/etc/bashrc \
+		&& ./maintainanceScripts/compileRequirements.sh"
+
+## Compile swak4Foam
+RUN	bash -c "source $TARGET_DIR/OpenFOAM-${VERSION}/etc/bashrc \
+		&& cp swakConfiguration.debian swakConfiguration \
+		&& export WM_NCOMPPROCS=4 \
+		&& ./Allwmake -j 4 \
+		&& ./Allwmake -j 4 \
+		&& ./maintainanceScripts/copySwakFilesToSite.sh"
+
+## Move data to global install
+RUN mv /root/OpenFOAM/-2.4.x/platforms/linux64GccDPOpt/lib/* /opt/openfoam/2.4.x/OpenFOAM-2.4.x/platforms/linux64GccDPOpt/lib -v \
+		&& mv /root/OpenFOAM/-2.4.x/platforms/linux64GccDPOpt/bin/* /opt/openfoam/2.4.x/OpenFOAM-2.4.x/platforms/linux64GccDPOpt/bin -v \
+		&& rm -rfv /root/OpenFOAM
+
 # user mounted volume
 WORKDIR /OpenFOAM
