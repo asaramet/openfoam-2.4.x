@@ -16,7 +16,8 @@ RUN git clone https://github.com/OpenFOAM/OpenFOAM-2.4.x.git \
 		&& wget http://download.sourceforge.net/project/foam/foam/2.4.0/ThirdParty-2.4.0.tgz \
 		&& tar zxvf ThirdParty-2.4.0.tgz --exclude=ParaView* --exclude=openmpi* --exclude=cmake* --exclude=CGAL*\
 		&& rm ThirdParty-2.4.0.tgz && mv ThirdParty-2.4.0 ThirdParty-${VERSION} \
-		&& wget http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz \
+		&& wget https://www2.hs-esslingen.de/~asaramet/packages/metis-5.1.0.tar.gz \
+		#&& wget http://glaros.dtc.umn.edu/gkhome/fetch/sw/metis/metis-5.1.0.tar.gz \
 		&& tar zxvf metis-5.1.0.tar.gz -C ${TARGET_DIR}/ThirdParty-${VERSION} && rm metis-5.1.0.tar.gz \
 		&& wget https://github.com/CGAL/cgal/archive/refs/tags/releases/CGAL-4.6.3.tar.gz \
 		&& tar zxvf CGAL-4.6.3.tar.gz && rm CGAL-4.6.3.tar.gz \
